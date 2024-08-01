@@ -12,29 +12,46 @@ const rulesMap = {
 		s: 'win',
 		p: 'lose',
 		erast: 'lose',
+		icon: '🗿',
+		snake: 'win',
 	},
 	p: {
 		p: 'draw',
 		s: 'lose',
 		r: 'win',
 		erast: 'lose',
+		icon: '📄',
+		snake: 'lose',
 	},
 	s: {
 		s: 'draw',
 		p: 'win',
 		r: 'lose',
 		erast: 'lose',
+		icon: '✂️',
+		snake: 'win',
 	},
 	erast: {
 		s: 'win',
 		p: 'win',
 		r: 'win',
 		erast: 'draw',
+		icon: '🐈',
+		snake: 'win',
+	},
+	snake: {
+		s: 'lose',
+		p: 'win',
+		r: 'lose',
+		erast: 'lose',
+		snake: 'draw',
+		icon: '🐍',
 	},
 }
 
+let choices = Object.keys(rulesMap)
+
 function computerChoice() {
-	let choices = Object.keys(rulesMap)
 	const index = Math.round(Math.random() * (choices.length - 1))
 	console.log(index)
 	return choices[index]
@@ -51,44 +68,55 @@ const result = document.createElement('h1')
 result.textContent = "let's play"
 app.append(computerChoiceElement, result)
 
-const scissorsButton = document.createElement('button')
-const rockButton = document.createElement('button')
-const paperButton = document.createElement('button')
-const erastButton = document.createElement('button')
-scissorsButton.textContent = '✂️'
-rockButton.textContent = '🗿'
-paperButton.textContent = '📄'
-erastButton.textContent = 'DEATH'
-app.append(scissorsButton, rockButton, paperButton, erastButton)
+for (const choice of choices) {
+	const button = document.createElement('button')
+	button.textContent = rulesMap[choice].icon
+	app.append(button)
+	button.addEventListener('click', () => {
+		const compChoice = computerChoice()
+		result.textContent = checkWin(choice, compChoice)
+		computerChoiceElement.textContent = rulesMap[compChoice].icon
+	})
+}
 
-scissorsButton.addEventListener('click', () => {
-	const myChoice = 's'
-	const compChoice = computerChoice()
+// const scissorsButton = document.createElement('button')
+// const rockButton = document.createElement('button')
+// const paperButton = document.createElement('button')
+// const erastButton = document.createElement('button')
+// scissorsButton.textContent = '✂️'
+// rockButton.textContent = '🗿'
+// paperButton.textContent = '📄'
+// erastButton.textContent = 'DEATH'
+// app.append(scissorsButton, rockButton, paperButton, erastButton)
 
-	result.textContent = checkWin(myChoice, compChoice)
-	computerChoiceElement.textContent = compChoice
-})
+// scissorsButton.addEventListener('click', () => {
+// 	const myChoice = 's'
+// 	const compChoice = computerChoice()
 
-rockButton.addEventListener('click', () => {
-	const myChoice = 'r'
-	const compChoice = computerChoice()
+// 	result.textContent = checkWin(myChoice, compChoice)
+// 	computerChoiceElement.textContent = compChoice
+// })
 
-	result.textContent = checkWin(myChoice, compChoice)
-	computerChoiceElement.textContent = compChoice
-})
+// rockButton.addEventListener('click', () => {
+// 	const myChoice = 'r'
+// 	const compChoice = computerChoice()
 
-paperButton.addEventListener('click', () => {
-	const myChoice = 'p'
-	const compChoice = computerChoice()
+// 	result.textContent = checkWin(myChoice, compChoice)
+// 	computerChoiceElement.textContent = compChoice
+// })
 
-	result.textContent = checkWin(myChoice, compChoice)
-	computerChoiceElement.textContent = compChoice
-})
+// paperButton.addEventListener('click', () => {
+// 	const myChoice = 'p'
+// 	const compChoice = computerChoice()
 
-erastButton.addEventListener('click', () => {
-	const myChoice = 'erast'
-	const compChoice = computerChoice()
+// 	result.textContent = checkWin(myChoice, compChoice)
+// 	computerChoiceElement.textContent = compChoice
+// })
 
-	result.textContent = checkWin(myChoice, compChoice)
-	computerChoiceElement.textContent = compChoice
-})
+// erastButton.addEventListener('click', () => {
+// 	const myChoice = 'erast'
+// 	const compChoice = computerChoice()
+
+// 	result.textContent = checkWin(myChoice, compChoice)
+// 	computerChoiceElement.textContent = compChoice
+// })
